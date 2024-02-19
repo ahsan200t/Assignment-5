@@ -5,7 +5,11 @@ for (let i = 0; i < seatA.length; i++) {
     const seat = seatA[i];
 
     seat.addEventListener("click", function () {
-        seat.classList.add('bg-lime-600');
+        if (seat.classList.contains("bg-lime-600")) {
+            return;
+        }
+        seat.classList.add("bg-lime-600");
+
 
         const getText = seat.innerText;
 
@@ -27,7 +31,7 @@ for (let i = 0; i < seatA.length; i++) {
             totalSeatElement.innerText = totalSeat;
 
         } else {
-            alert("you can not select more");
+            alert("YOU CAN NOT SELECT YET!");
             seat.classList.remove('bg-lime-600');
             seat.classList.add('bg-slate-200');
             tableContainer.removeChild(p);
@@ -76,7 +80,17 @@ btn.addEventListener("click", function () {
             document.getElementById('input-field').value = "";
             document.getElementById('input-value').classList.add("hidden");
 
+
+        } else if (couponElement === "NEW15") {
+            const discountPrice = totalPrice * 0.15;
+
+            const grandTotal = document.getElementById("grand-total");
+            grandTotal.innerText = totalPrice - discountPrice;
+
+            document.getElementById('input-field').value = "";
+            document.getElementById('input-value').classList.add("hidden");
         }
+
 
     } else {
         alert("Invalid Coupon Code")
@@ -84,5 +98,7 @@ btn.addEventListener("click", function () {
     }
 })
 
-  
-
+const popupBtn = document.getElementById("continue-btn");
+popupBtn.addEventListener("click", function () {
+    window.location.reload();
+})
