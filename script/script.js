@@ -1,4 +1,5 @@
 let totalPrice = 0;
+let grandTotal = 0;
 const seatA = document.querySelectorAll("#a");
 for (let i = 0; i < seatA.length; i++) {
     const seat = seatA[i];
@@ -14,13 +15,27 @@ for (let i = 0; i < seatA.length; i++) {
         p.innerText = getText;
         tableContainer.appendChild(p);
 
+
         // Seat Count
         const totalSeatElement = document.getElementById("total-seat");
+
         const totalSeatText = totalSeatElement.innerText;
         const currentSeat = parseInt(totalSeatText);
 
         const totalSeat = currentSeat + 1;
-        totalSeatElement.innerText = totalSeat;
+        if (totalSeat <= 4) {
+            totalSeatElement.innerText = totalSeat;
+
+        } else {
+            alert("you can not select more");
+            seat.classList.remove('bg-lime-600');
+            seat.classList.add('bg-slate-200');
+            tableContainer.removeChild(p);
+            grandTotalPrice.innerText = "";
+
+
+        }
+
 
         // Seat Reduce
         const reduceSeatElement = document.getElementById("seat-reduce");
@@ -40,12 +55,14 @@ for (let i = 0; i < seatA.length; i++) {
         totalPrice += perSeatPrice;
         document.getElementById('total-price').innerText = totalPrice;
 
+        const grandTotalPrice = document.getElementById("grand-total");
+        grandTotalPrice.innerText = totalPrice + grandTotal;
+
     })
 }
-
 const btn = document.getElementById('apply-btn');
 btn.addEventListener("click", function () {
-    // console.log("connected")
+
 
     const couponElement = document.getElementById('input-field').value;
     if (couponElement === "NEW15" || couponElement === "Couple 20") {
@@ -56,12 +73,16 @@ btn.addEventListener("click", function () {
             const grandTotalPrice = document.getElementById("grand-total");
             grandTotalPrice.innerText = totalPrice - discountAmount;
 
+            document.getElementById('input-field').value = "";
+            document.getElementById('input-value').classList.add("hidden");
 
         }
 
     } else {
         alert("Invalid Coupon Code")
+        document.getElementById('input-field').value = "";
     }
-
-
 })
+
+  
+
